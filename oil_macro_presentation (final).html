@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oil, Gold & The Fed — Macro War Playbook 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg:       #0a0b0d;
+    --surface:  #111318;
+    --border:   #1e2228;
+    --gold:     #c9a84c;
+    --gold-lt:  #e8c97a;
+    --red:      #d94f4f;
+    --green:    #3fa66e;
+    --blue:     #4a7fc1;
+    --white:    #e8e6e0;
+    --muted:    #7a8090;
+    --text:     #d0cec8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── SLIDE WRAPPER ── */
+  .slide {
+    min-height: 100vh;
+    padding: 60px 72px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 90% 10%, rgba(201,168,76,0.04) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* ── SLIDE NUMBERS ── */
+  .slide-num {
+    position: absolute;
+    top: 28px;
+    right: 72px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+
+  /* ── COVER SLIDE ── */
+  #cover {
+    background: linear-gradient(145deg, #0a0b0d 0%, #0f1116 50%, #0e0f13 100%);
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .cover-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 6vw, 82px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.05;
+    max-width: 820px;
+    margin-bottom: 10px;
+  }
+
+  .cover-title span { color: var(--gold); }
+
+  .cover-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 2.5vw, 30px);
+    font-weight: 400;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 56px;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 56px;
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+  }
+
+  .cover-meta-item label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .cover-meta-item span {
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .gold-rule {
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin-bottom: 32px;
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background: rgba(217,79,79,0.15);
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    margin-bottom: 32px;
+  }
+
+  /* ── SECTION HEADINGS ── */
+  .slide-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .slide-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3.5vw, 44px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  .slide-title span { color: var(--gold); }
+
+  .slide-lead {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 780px;
+    margin-bottom: 36px;
+    line-height: 1.7;
+  }
+
+  /* ── TABLES ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    margin-bottom: 20px;
+  }
+
+  .data-table thead tr {
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .data-table th {
+    text-align: left;
+    padding: 10px 14px;
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .data-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .data-table tr:hover td { background: rgba(201,168,76,0.04); }
+
+  .data-table td.pos { color: var(--green); font-weight: 600; }
+  .data-table td.neg { color: var(--red);   font-weight: 600; }
+  .data-table td.gold-col { color: var(--gold); font-weight: 600; }
+  .data-table td.highlight-row { color: var(--white); font-weight: 700; }
+
+  .data-table tr.current-row td {
+    background: rgba(201,168,76,0.08);
+    color: var(--white);
+  }
+  .data-table tr.current-row td:first-child {
+    border-left: 3px solid var(--gold);
+    padding-left: 11px;
+  }
+
+  /* ── STAT CARDS ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    padding: 20px 20px 18px;
+  }
+
+  .stat-card .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .stat-card .value {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-card .value.red   { color: var(--red); }
+  .stat-card .value.green { color: var(--green); }
+  .stat-card .value.gold  { color: var(--gold); }
+
+  .stat-card .delta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── CHART CONTAINERS ── */
+  .chart-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .chart-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .chart-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  .chart-wrap { position: relative; height: 260px; }
+  .chart-wrap-tall { position: relative; height: 310px; }
+
+  /* ── TWO COLUMN LAYOUT ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+
+  /* ── TARP FRAMEWORK ── */
+  .tarp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+
+  .tarp-col {
+    padding: 22px 18px;
+    border-right: 1px solid var(--border);
+  }
+  .tarp-col:last-child { border-right: none; }
+
+  .tarp-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tarp-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tarp-level {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .tarp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .tarp-trigger {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .tarp-actions {
+    list-style: none;
+  }
+  .tarp-actions li {
+    font-size: 12px;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(30,34,40,0.8);
+    color: var(--text);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .tarp-actions li::before {
+    content: '→';
+    color: var(--gold);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── SCENARIO BOX ── */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .scenario-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 18px;
+  }
+
+  .scenario-prob {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .scenario-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .scenario-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .scenario-details {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .scenario-details strong { color: var(--text); }
+
+  /* ── QUOTE CALLOUT ── */
+  .callout {
+    border-left: 3px solid var(--gold);
+    padding: 16px 24px;
+    background: rgba(201,168,76,0.05);
+    margin: 20px 0;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  .callout cite {
+    display: block;
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* ── PERFORMANCE BAR ── */
+  .perf-bar-wrap { margin-bottom: 28px; }
+
+  .perf-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .perf-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 140px;
+  }
+
+  .perf-bar-bg {
+    flex: 1;
+    height: 20px;
+    background: var(--border);
+    position: relative;
+  }
+
+  .perf-bar-fill {
+    height: 100%;
+    transition: width 0.8s ease;
+  }
+
+  .perf-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  /* ── NARRATIVE TEXT ── */
+  .body-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+    max-width: 860px;
+    margin-bottom: 20px;
+  }
+
+  .body-text strong { color: var(--white); }
+
+  /* ── CONCLUSION ── */
+  #conclusion {
+    background: linear-gradient(160deg, #0a0b0d 0%, #0d0f12 100%);
+  }
+
+  .key-calls-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .key-call {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 16px 18px;
+  }
+
+  .key-call .call-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .key-call p {
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  .key-call p strong { color: var(--white); }
+
+  /* ── FOOTNOTES ── */
+  #footnotes {
+    background: #07080a;
+    padding: 48px 72px 56px;
+    border-top: 2px solid var(--border);
+    min-height: auto;
+  }
+
+  .footnotes-header {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .footnotes-author {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .footnote-list {
+    columns: 2;
+    column-gap: 48px;
+    list-style: none;
+  }
+
+  .footnote-list li {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #484d5a;
+    line-height: 1.55;
+    margin-bottom: 5px;
+    break-inside: avoid;
+    display: flex;
+    gap: 6px;
+  }
+
+  .footnote-list li .fn-num {
+    color: #606575;
+    flex-shrink: 0;
+    font-size: 8px;
+  }
+
+  .footnote-list li a {
+    color: #484d5a;
+    text-decoration: none;
+  }
+  .footnote-list li a:hover { color: var(--gold); }
+
+  .fn-disclaimer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #111318;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    color: #383d48;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  .nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    background: rgba(10,11,13,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 72px;
+    gap: 32px;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-right: auto;
+  }
+
+  .nav-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--gold); }
+
+  /* add top padding to all slides for nav */
+  .slide { padding-top: 80px; }
+  #cover { padding-top: 44px; }
+
+  /* ── MISC ── */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 28px 0;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid;
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+
+  .tag-red   { border-color: var(--red);   color: var(--red);   background: rgba(217,79,79,0.08); }
+  .tag-gold  { border-color: var(--gold);  color: var(--gold);  background: rgba(201,168,76,0.08); }
+  .tag-green { border-color: var(--green); color: var(--green); background: rgba(63,166,110,0.08); }
+  .tag-blue  { border-color: var(--blue);  color: var(--blue);  background: rgba(74,127,193,0.08); }
+
+  .risk-matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .risk-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .risk-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .risk-text strong {
+    display: block;
+    font-size: 13px;
+    color: var(--white);
+    margin-bottom: 3px;
+  }
+
+  .risk-text p {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .slide { padding: 60px 24px; }
+    .nav-bar { padding: 0 24px; }
+    .tarp-grid { grid-template-columns: 1fr 1fr; }
+    .scenario-grid { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .footnote-list { columns: 1; }
+    #footnotes { padding: 36px 24px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <span class="nav-logo">Blake Harris — Historical Oil Crisis — Macro Analysis</span>
+  <a class="nav-link" href="#crisis">Crisis</a>
+  <a class="nav-link" href="#overlay">Oil/Gold/CPI</a>
+  <a class="nav-link" href="#fed">Fed Cycles</a>
+  <a class="nav-link" href="#housing">Housing</a>
+  <a class="nav-link" href="#gromen">Gromen</a>
+  <a class="nav-link" href="#tarp">TARP</a>
+  <a class="nav-link" href="#scenarios">Scenarios</a>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 1 — COVER
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="cover">
+  <div class="slide-num">01 / 10</div>
+  <div style="max-width:860px; margin-top: 80px;">
+    <div class="cover-eyebrow">Macro Analysis &amp; Playbook — Blake Harris — March 2026</div>
+    <h1 class="cover-title">Oil, <span>Gold</span> &amp; The Fed:<br>A Macro War Playbook</h1>
+    <p class="cover-subtitle">The Strait of Hormuz Crisis in Historical Context</p>
+    <div class="gold-rule"></div>
+    <div style="display:flex; gap:36px; margin-bottom:22px; flex-wrap:wrap;">
+      <div style="display:flex; flex-direction:column; gap:2px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.18em; color:var(--muted); text-transform:uppercase;">Author</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--white);">Blake Harris</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:2px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.18em; color:var(--muted); text-transform:uppercase;">Date</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--white);">27 March 2026</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:2px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.18em; color:var(--muted); text-transform:uppercase;">Classification</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--red);">Strictly NOT Financial Advice</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:2px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.18em; color:var(--muted); text-transform:uppercase;">Category</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--white);">Macro Strategy / Risk</span>
+      </div>
+    </div>
+    <p class="body-text" style="color:var(--muted); margin-bottom:40px;">
+      The 2026 Iran war has triggered the <strong style="color:var(--white)">largest oil supply disruption in modern history</strong> —
+      ~20 million barrels per day, 3–5× the scale of any prior shock — occurring at precisely
+      the worst fiscal moment in US history: $39T in federal debt, $1T+ in annual interest, and
+      a Federal Reserve trapped between inflation and recession. History is unambiguous about what happens next.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 2 — THE CRISIS IN NUMBERS
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="crisis">
+  <div class="slide-num">02 / 10</div>
+  <div class="slide-eyebrow">Situation Assessment — March 27, 2026</div>
+  <h2 class="slide-title">The Largest Energy Disruption<br>in <span>Modern History</span></h2>
+  <p class="slide-lead">The IEA has called this "the greatest global energy security challenge in history."<sup>[1]</sup> The market is pricing a quick resolution. History says that is the wrong call.</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="label">Hormuz Throughput Blocked</div>
+      <div class="value gold">~20</div>
+      <div class="delta">Million barrels/day — 20% of global supply<sup>[2]</sup></div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Brent Crude (Peak, Mar 8)</div>
+      <div class="value red">$126</div>
+      <div class="delta">Up from $72 at year-start (+75%)<sup>[3]</sup></div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Gulf Output Loss (Mar 12)</div>
+      <div class="value red">−10M</div>
+      <div class="delta">Barrels/day — Kuwait, Iraq, Saudi, UAE<sup>[4]</sup></div>
+    </div>
+    <div class="stat-card">
+      <div class="label">US CPI (Feb '26 — pre-shock)</div>
+      <div class="value gold">2.4%</div>
+      <div class="delta">March print (Apr 10) will be the first with oil pass-through<sup>[5]</sup></div>
+    </div>
+    <div class="stat-card">
+      <div class="label">S&amp;P 500 Drawdown (to date)</div>
+      <div class="value red">−7%</div>
+      <div class="delta">Historical avg decline in oil shock: −33–39%<sup>[6]</sup></div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Fed Funds Rate (Mar 18 Hold)</div>
+      <div class="value">3.5–3.75%</div>
+      <div class="delta">Frozen. Powell: "prepared to do what needs to be done"<sup>[7]</sup></div>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">Oil Shock Severity — Supply Disruption Comparison (Million Barrels/Day)</div>
+    <div class="chart-subtitle">2026 Hormuz closure dwarfs every prior oil shock by 3–5× in raw supply terms<sup>[8]</sup></div>
+    <div class="chart-wrap">
+      <canvas id="severityChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 3 — HISTORICAL OIL SHOCK MATRIX
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="matrix">
+  <div class="slide-num">03 / 10</div>
+  <div class="slide-eyebrow">Historical Analysis — 1973 to Present</div>
+  <h2 class="slide-title">Every Oil Shock, <span>Ranked by Damage</span></h2>
+  <p class="slide-lead">Six decades of data. The pattern is consistent: sustained supply shocks produce recessions and major equity drawdowns. The 2026 setup is uniquely vulnerable because of the fiscal position and Hormuz's irreplaceable role.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Shock</th>
+        <th>Supply Cut (mbd)</th>
+        <th>% Global Supply</th>
+        <th>Oil Price Move</th>
+        <th>CPI Peak</th>
+        <th>S&amp;P 500 Drawdown</th>
+        <th>Recession?</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="highlight-row">1973 Arab Embargo<sup>[9]</sup></td>
+        <td>4.5</td>
+        <td>~7%</td>
+        <td>$3 → $12 (+300%)</td>
+        <td>12.3%</td>
+        <td>−48.2%</td>
+        <td>Yes</td>
+        <td>16 months</td>
+      </tr>
+      <tr>
+        <td class="highlight-row">1979 Iran Revolution<sup>[10]</sup></td>
+        <td>3–4</td>
+        <td>~4%</td>
+        <td>$14 → $39 (+180%)</td>
+        <td>14.8%</td>
+        <td>−27.1%</td>
+        <td>Yes (double-dip)</td>
+        <td>24+ months</td>
+      </tr>
+      <tr>
+        <td class="highlight-row">1990 Gulf War<sup>[11]</sup></td>
+        <td>4.3</td>
+        <td>~6%</td>
+        <td>$17 → $46 (+135%)</td>
+        <td>6.3%</td>
+        <td>−19.9%</td>
+        <td>Yes (mild)</td>
+        <td>8 months</td>
+      </tr>
+      <tr>
+        <td class="highlight-row">2008 Supercycle<sup>[12]</sup></td>
+        <td>N/A (demand)</td>
+        <td>N/A</td>
+        <td>$30 → $147 (+390%)</td>
+        <td>5.6%</td>
+        <td>−56.8%</td>
+        <td>Yes</td>
+        <td>18 months</td>
+      </tr>
+      <tr>
+        <td class="highlight-row">2022 Russia-Ukraine<sup>[13]</sup></td>
+        <td>1–2 (threatened)</td>
+        <td>~1–2%</td>
+        <td>$80 → $139 (+74%)</td>
+        <td>9.1%</td>
+        <td>−25.4%</td>
+        <td>No</td>
+        <td>—</td>
+      </tr>
+      <tr class="current-row">
+        <td class="highlight-row">2026 Hormuz Closure ▶ NOW<sup>[14]</sup></td>
+        <td>15.8–20</td>
+        <td>~20%</td>
+        <td>$72 → $126 peak (+75%)</td>
+        <td>2.4% → TBD</td>
+        <td>−7% (so far)</td>
+        <td>TBD</td>
+        <td>27 days + counting</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    "The 2026 disruption removes 3–5× more supply than any previous shock. Unlike sanctions-driven disruptions, a sustained Hormuz closure obstructs not just trade routes — but the very ability of producers to export."
+    <cite>— Al Jazeera / Macroeconomic Analysis, March 23, 2026<sup>[15]</sup></cite>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 4 — OIL / GOLD / CPI OVERLAY
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="overlay">
+  <div class="slide-num">04 / 10</div>
+  <div class="slide-eyebrow">Gromen-Style Macro Overlay — 1970 to 2026</div>
+  <h2 class="slide-title">Oil → CPI → <span>Gold</span>: The Transmission Chain</h2>
+  <p class="slide-lead">Gold leads or matches CPI in every oil shock. The transmission lag from oil to CPI has compressed from 11 months (1973) to 0–3 months today. Gold at $5,603 in January 2026 is already pricing in what the CPI has not yet reflected.<sup>[16]</sup></p>
+
+  <div class="chart-container">
+    <div class="chart-title">CPI Peak, Oil Peak &amp; Gold Performance — Each Oil Shock</div>
+    <div class="chart-subtitle">Indexed to pre-shock baseline = 100 · Sources: BLS, FRED, USAGOLD<sup>[17][18][19]</sup></div>
+    <div class="chart-wrap-tall">
+      <canvas id="overlayChart"></canvas>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Oil Shock</th>
+          <th>Gold Before</th>
+          <th>Gold Peak</th>
+          <th>Gold Δ</th>
+          <th>CPI Peak</th>
+          <th>Lag</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1973 Embargo<sup>[20]</sup></td>
+          <td>$65</td>
+          <td>$193</td>
+          <td class="pos">+197%</td>
+          <td class="neg">12.3%</td>
+          <td>~11 mo</td>
+        </tr>
+        <tr>
+          <td>1979–80 Iran<sup>[21]</sup></td>
+          <td>$226</td>
+          <td>$850</td>
+          <td class="pos">+276%</td>
+          <td class="neg">14.8%</td>
+          <td>~0 mo</td>
+        </tr>
+        <tr>
+          <td>1990 Gulf War<sup>[22]</sup></td>
+          <td>$365</td>
+          <td>$414</td>
+          <td class="pos">+13%</td>
+          <td class="neg">6.3%</td>
+          <td>0 mo</td>
+        </tr>
+        <tr>
+          <td>2008 Supercycle<sup>[23]</sup></td>
+          <td>$836</td>
+          <td>$1,011</td>
+          <td class="pos">+21%</td>
+          <td class="neg">5.6%</td>
+          <td>0 mo</td>
+        </tr>
+        <tr>
+          <td>2022 Russia-Ukraine<sup>[24]</sup></td>
+          <td>$1,800</td>
+          <td>$2,075</td>
+          <td class="pos">+15%</td>
+          <td class="neg">9.1%</td>
+          <td>3 mo</td>
+        </tr>
+        <tr class="current-row">
+          <td>2024–26 Current<sup>[25]</sup></td>
+          <td>$2,050</td>
+          <td class="gold-col">$5,603</td>
+          <td class="pos">+173%</td>
+          <td class="gold-col">2.4% → ?</td>
+          <td class="gold-col">TBD</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <div class="chart-container" style="margin-bottom:0; height: 100%;">
+        <div class="chart-title">Gold vs S&amp;P 500 Real Returns — 1970s Stagflation<sup>[26]</sup></div>
+        <div class="chart-subtitle">Annualized real returns during The Great Inflation</div>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--muted); border-left:2px solid var(--gold); padding-left:8px; line-height:1.6;">
+            S&amp;P 500 returned ~+75% <em>nominal</em> over the decade — but with CPI averaging ~7.4%/yr, real return was <strong style="color:var(--white)">−1.2% annualized</strong>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--muted); border-left:2px solid var(--gold); padding-left:8px; line-height:1.6;">
+            The 1970s is widely called a <strong style="color:var(--white)">"lost decade"</strong> — nominal gains entirely consumed by inflation
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--muted); border-left:2px solid var(--gold); padding-left:8px; line-height:1.6;">
+            Gold delivered <strong style="color:var(--gold)">+2,300% nominal</strong> ($35 → $850) — the only major asset with meaningfully positive real returns
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="realReturnsChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 5 — FED RATE CYCLES
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="fed">
+  <div class="slide-num">05 / 10</div>
+  <div class="slide-eyebrow">Federal Reserve — Historical Rate Cycles vs Oil Shocks</div>
+  <h2 class="slide-title">When The Fed <span>Hikes Into Oil</span>,<br>Equities Always Bleed</h2>
+  <p class="slide-lead">The record across five episodes is unambiguous: every time the Fed tightened into an oil shock, the S&amp;P 500 fell an average of −39%. The sole exception — 1990 Greenspan — worked because he cut rates aggressively. That option is now off the table at 2.4% CPI and $39T in debt.<sup>[27]</sup></p>
+
+  <div class="chart-container">
+    <div class="chart-title">Federal Funds Rate — Historical Cycles Across All Major Oil Shocks<sup>[28]</sup></div>
+    <div class="chart-subtitle">Peak Fed Funds Rate vs S&amp;P 500 Maximum Drawdown During Each Episode</div>
+    <div class="chart-wrap-tall">
+      <canvas id="fedChart"></canvas>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Episode</th>
+        <th>Fed Chair</th>
+        <th>Fed Action</th>
+        <th>Peak Rate</th>
+        <th>S&amp;P 500 Outcome</th>
+        <th>Recession?</th>
+        <th>Key Consequence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1973–74<sup>[29]</sup></td>
+        <td>Burns</td>
+        <td class="neg">Hiked</td>
+        <td class="neg">12.0%</td>
+        <td class="neg">−48.2%</td>
+        <td class="neg">Yes (16 mo)</td>
+        <td>Stop-go policy entrenches inflation</td>
+      </tr>
+      <tr>
+        <td>1979–82<sup>[30]</sup></td>
+        <td>Volcker</td>
+        <td class="neg">Hiked hard</td>
+        <td class="neg">19.1%</td>
+        <td class="neg">−27.1%</td>
+        <td class="neg">Yes (double-dip)</td>
+        <td>30-yr mortgage hits 18.63%. Unemployment 10.8%</td>
+      </tr>
+      <tr>
+        <td>1990–91<sup>[31]</sup></td>
+        <td>Greenspan</td>
+        <td class="pos">Cut 8.25%→3%</td>
+        <td class="pos">3.0%</td>
+        <td class="neg">−19.9%</td>
+        <td class="neg">Yes (mild, 8 mo)</td>
+        <td>Only accommodation = mildest recession</td>
+      </tr>
+      <tr>
+        <td>2007–09<sup>[32]</sup></td>
+        <td>Bernanke</td>
+        <td class="neg">Hiked then cut</td>
+        <td class="neg">5.25%</td>
+        <td class="neg">−56.8%</td>
+        <td class="neg">Yes (18 mo)</td>
+        <td>GFC. ZIRP adopted. QE1 launched</td>
+      </tr>
+      <tr>
+        <td>2022–23<sup>[33]</sup></td>
+        <td>Powell</td>
+        <td class="neg">Hiked 525bp</td>
+        <td class="neg">5.50%</td>
+        <td class="neg">−25.4%</td>
+        <td class="pos">No</td>
+        <td>Fastest tightening cycle in 40 yrs. Bonds -17.7%</td>
+      </tr>
+      <tr class="current-row">
+        <td>2026 NOW<sup>[34]</sup></td>
+        <td>Powell</td>
+        <td class="gold-col">Hold 3.5–3.75%</td>
+        <td class="gold-col">3.5–3.75%</td>
+        <td class="neg">−7% (so far)</td>
+        <td class="gold-col">Developing</td>
+        <td>2yr yield above FFR. Rate hike being priced in</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 6 — HOUSING & DELINQUENCY
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="housing">
+  <div class="slide-num">06 / 10</div>
+  <div class="slide-eyebrow">Credit Stress — The Slow-Burn Cascade</div>
+  <h2 class="slide-title">Housing Delinquency &amp; <span>The Rate Trap</span></h2>
+  <p class="slide-lead">Oil shocks hit housing on a 12–24 month lag. We are 45 months into the 2022 rate shock. Residential mortgages show early-stage stress; commercial real estate is already in crisis territory — office CMBS delinquency at 12.34% has surpassed the GFC peak.<sup>[35]</sup></p>
+
+  <div class="two-col">
+    <div class="chart-container">
+      <div class="chart-title">US Mortgage Delinquency Rate — Historical<sup>[36]</sup></div>
+      <div class="chart-subtitle">Overall 30+ day delinquency across all mortgage types (MBA)</div>
+      <div class="chart-wrap">
+        <canvas id="delinquencyChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">CMBS Delinquency by Sector — 2026<sup>[37]</sup></div>
+      <div class="chart-subtitle">Office CMBS now exceeds GFC peak. Multifamily surging.</div>
+      <div class="chart-wrap">
+        <canvas id="cmbs Chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="font-size:13px;">
+    <strong style="font-style:normal; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold);">CMBS — Commercial Mortgage-Backed Securities</strong><br><br>
+    Commercial property loans → bundled into bonds → sold to investors (pension funds, insurers, banks) → when borrowers can't pay, the delinquency rate spikes → investors holding those bonds take losses. At <strong>12.34% office delinquency</strong> right now, this is where the next systemic credit stress is most likely to emerge — especially with <strong>$875B+ in CRE loans maturing in 2026</strong> that need to refinance at much higher rates.
+    <cite>— Blake Harris · Housing &amp; Credit Risk Analysis · March 2026</cite>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Period</th>
+        <th>Trigger Chain</th>
+        <th>Mortgage Delinquency Peak</th>
+        <th>Home Price Decline</th>
+        <th>Key Stress Sector</th>
+        <th>Resolution Timeline</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1980–82<sup>[38]</sup></td>
+        <td>Oil → 14.8% CPI → 20% FFR → 18.63% mortgages</td>
+        <td class="neg">~5–7%</td>
+        <td class="neg">−17% real</td>
+        <td class="neg">S&amp;Ls (−$100B net worth)</td>
+        <td>3–4 years</td>
+      </tr>
+      <tr>
+        <td>2006–09<sup>[39]</sup></td>
+        <td>Fed hikes → ARM resets → Subprime defaults → GFC</td>
+        <td class="neg">10.06% (Q1 2010)</td>
+        <td class="neg">−27.4% national</td>
+        <td class="neg">Subprime MBS</td>
+        <td>5–7 years</td>
+      </tr>
+      <tr class="current-row">
+        <td>2022–26 NOW<sup>[40]</sup></td>
+        <td>Oil + fiscal → 9.1% CPI → 5.5% FFR → 7.8% mortgages</td>
+        <td class="gold-col">4.26% (Q4 2025, rising)</td>
+        <td class="gold-col">Flat to slightly negative real</td>
+        <td class="neg">CRE Office (12.34% CMBS)</td>
+        <td class="gold-col">Developing</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="risk-matrix">
+    <div class="risk-item">
+      <div class="risk-icon">🏦</div>
+      <div class="risk-text">
+        <strong>Office CMBS: 12.34% Delinquency</strong>
+        <p>All-time record, exceeding GFC peak of 10.7%. National office vacancy ~20% from permanent hybrid work shift. $875B+ in CRE loans mature in 2026.<sup>[41]</sup></p>
+      </div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-icon">🏘️</div>
+      <div class="risk-text">
+        <strong>FHA Delinquency: 11.52% (+74bp QoQ)</strong>
+        <p>Lower-income, higher-leverage borrowers showing first signs of oil shock pass-through. 2022–23 vintage loans now rolling into distress.<sup>[42]</sup></p>
+      </div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-icon">💳</div>
+      <div class="risk-text">
+        <strong>Credit Card 90+ Day: Near 9%</strong>
+        <p>Highest in over a decade. Total household debt $18.55T (Q4 2025). Consumer already stretched before oil shock adds $0.48/gallon to gasoline in week one.<sup>[43]</sup></p>
+      </div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-icon">🛡️</div>
+      <div class="risk-text">
+        <strong>Rate-Lock Shield (Partial Protection)</strong>
+        <p>Avg LTV across all mortgages: 46.9% (FHFA). 40% of homeowners carry no mortgage. Most locked sub-4% rates 2020–21. This limits cascade risk vs. 2008.<sup>[44]</sup></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 7 — GROMEN FRAMEWORK
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="gromen">
+  <div class="slide-num">07 / 10</div>
+  <div class="slide-eyebrow">FFTT Macro Intelligence — Luke Gromen Framework</div>
+  <h2 class="slide-title">Fiscal Dominance Meets <span>Energy War</span></h2>
+  <p class="slide-lead">Luke Gromen's thesis — that the petrodollar system is fracturing and gold is replacing Treasuries as the settlement layer — has moved from contrarian to consensus-adjacent. The 2026 Hormuz closure is the event his framework has been predicting for a decade.</p>
+
+  <div class="callout">
+    "Iran doesn't need to defeat the US military. It just needs to get oil to $120. If we get oil to $120, your bond market, your economy, is going to collapse. And the US government cannot raise rates to fight it, because at 140% debt-to-GDP, every 100bp of hiking costs $390 billion in additional annual interest."
+    <cite>— Luke Gromen, FFTT / Metals &amp; Miners Substack, March 23, 2026<sup>[45]</sup></cite>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="chart-container">
+        <div class="chart-title">Gold-to-Oil Ratio — 1970 to 2026<sup>[46]</sup></div>
+        <div class="chart-subtitle">Historical avg: ~16 bbl/oz. Current all-time high: ~61 bbl/oz (Sep 2025). Signals petrodollar fracture.</div>
+        <div class="chart-wrap">
+          <canvas id="goldOilChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="body-text" style="font-size:13px;">
+        <strong>The Gromen Gold-to-Foreign-Debt Ratio</strong> — his core structural metric — stood at crisis-level ~7% in early 2024, rose to ~16–19% by January 2026 as gold hit $5,600, but remains below the <strong>20% minimum</strong> that has historically provided adequate confidence in the system.<sup>[47]</sup>
+      </p>
+      <p class="body-text" style="font-size:13px;">
+        The 1970s averaged <strong>40%</strong>; the late-1970s peak was <strong>135%</strong>. His framework implies gold needs to reach <strong>$10,000+/oz</strong> to restore functional levels.
+      </p>
+
+      <div style="margin-top: 16px;">
+        <div class="label" style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.18em; color:var(--muted); text-transform:uppercase; margin-bottom:12px;">Central Bank Gold Purchases (Tonnes)<sup>[48]</sup></div>
+        <div class="perf-bar-wrap">
+          <div class="perf-row">
+            <div class="perf-label">2017</div>
+            <div class="perf-bar-bg"><div class="perf-bar-fill" style="width:35%; background:var(--muted);"></div></div>
+            <div class="perf-value" style="color:var(--muted);">~375t</div>
+          </div>
+          <div class="perf-row">
+            <div class="perf-label">2019</div>
+            <div class="perf-bar-bg"><div class="perf-bar-fill" style="width:65%; background:var(--blue);"></div></div>
+            <div class="perf-value" style="color:var(--blue);">~650t</div>
+          </div>
+          <div class="perf-row">
+            <div class="perf-label">2021</div>
+            <div class="perf-bar-bg"><div class="perf-bar-fill" style="width:55%; background:var(--blue);"></div></div>
+            <div class="perf-value" style="color:var(--blue);">~450t</div>
+          </div>
+          <div class="perf-row">
+            <div class="perf-label">2022</div>
+            <div class="perf-bar-bg"><div class="perf-bar-fill" style="width:90%; background:var(--gold);"></div></div>
+            <div class="perf-value" style="color:var(--gold);">~1,136t</div>
+          </div>
+          <div class="perf-row">
+            <div class="perf-label">2023</div>
+            <div class="perf-bar-bg"><div class="perf-bar-fill" style="width:100%; background:var(--gold);"></div></div>
+            <div class="perf-value" style="color:var(--gold);">~1,200t</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 8 — ASSET PERFORMANCE IN STAGFLATION
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="performance">
+  <div class="slide-num">08 / 10</div>
+  <div class="slide-eyebrow">Portfolio Strategy — Historical Asset Performance</div>
+  <h2 class="slide-title">What <span>Actually Works</span><br>in Stagflation</h2>
+  <p class="slide-lead">The 1970s are the definitive stress test for a stagflationary environment. The conclusion is blunt: gold and commodities are the only assets that delivered meaningful positive real returns. Bonds were catastrophic. Equities were flat in real terms for an entire decade.<sup>[49]</sup></p>
+
+  <div class="two-col">
+    <div class="chart-container">
+      <div class="chart-title">1970s Stagflation — Annualized Real Returns<sup>[50]</sup></div>
+      <div class="chart-subtitle">The definitive ranking. Nominal bonds: −3 to −5% real annually.</div>
+      <div class="chart-wrap-tall">
+        <canvas id="stagflationChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">2022 Inflation Surge — Asset Performance<sup>[51]</sup></div>
+      <div class="chart-subtitle">When the Fed CAN hike aggressively: energy stocks win, gold flat.</div>
+      <div class="chart-wrap-tall">
+        <canvas id="2022Chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Asset Class</th>
+        <th>1970s Real Return</th>
+        <th>2022 Nominal Return</th>
+        <th>2026 Setup</th>
+        <th>Conviction</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="highlight-row">Gold</td>
+        <td class="pos">+9.2% annualized</td>
+        <td class="neg">−0.3%</td>
+        <td class="gold-col">OVERWEIGHT — Fed trapped, fiscal dominance</td>
+        <td><span class="tag tag-red">HIGH</span></td>
+      </tr>
+      <tr>
+        <td class="highlight-row">Commodities (broad)</td>
+        <td class="pos">+586% total decade</td>
+        <td class="pos">+16%</td>
+        <td class="gold-col">OVERWEIGHT — supply shock structural</td>
+        <td><span class="tag tag-red">HIGH</span></td>
+      </tr>
+      <tr>
+        <td class="highlight-row">Energy Equities</td>
+        <td class="pos">Strongly positive</td>
+        <td class="pos">+59%</td>
+        <td class="gold-col">OVERWEIGHT — primary hedge in hiking env.</td>
+        <td><span class="tag tag-red">HIGH</span></td>
+      </tr>
+      <tr>
+        <td class="highlight-row">TIPS / ILBs</td>
+        <td class="pos">~+2–4% real</td>
+        <td class="neg">−12%</td>
+        <td class="pos">OVERWEIGHT — breakevens severely mispriced</td>
+        <td><span class="tag tag-gold">MED-HIGH</span></td>
+      </tr>
+      <tr>
+        <td class="highlight-row">S&amp;P 500 (broad)</td>
+        <td>~0% real</td>
+        <td class="neg">−19.4%</td>
+        <td class="neg">REDUCE BETA — avg drawdown −33–39% in oil shocks</td>
+        <td><span class="tag tag-gold">REDUCE</span></td>
+      </tr>
+      <tr>
+        <td class="highlight-row">Long-Duration Bonds</td>
+        <td class="neg">−3 to −5% real</td>
+        <td class="neg">−17.7%</td>
+        <td class="neg">SHORT/AVOID — fiscal dominance destroys duration</td>
+        <td><span class="tag tag-red">AVOID</span></td>
+      </tr>
+      <tr>
+        <td class="highlight-row">Cash / T-Bills</td>
+        <td>~0% real</td>
+        <td class="pos">+2%</td>
+        <td class="pos">HOLD — elevated rates, optionality</td>
+        <td><span class="tag tag-gold">HOLD</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 9 — TARP FRAMEWORK
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="tarp">
+  <div class="slide-num">09 / 10</div>
+  <div class="slide-eyebrow">Decision Framework — Trigger Action Response Plan</div>
+  <h2 class="slide-title">The <span>TARP</span> — Four Escalation Levels</h2>
+  <p class="slide-lead">This framework establishes specific market triggers and the corresponding portfolio actions at each stage of the crisis escalation. Triggers are objective and observable. Actions are decisive. We are currently at Level 2, approaching Level 3 conditions.</p>
+
+  <div class="tarp-grid">
+    <!-- LEVEL 1 -->
+    <div class="tarp-col">
+      <div class="tarp-header">
+        <div class="tarp-dot" style="background:#f0c040;"></div>
+        <span class="tarp-level" style="color:#f0c040;">Level 1 — Early Warning</span>
+      </div>
+      <div class="tarp-title">Oil Spike Alert</div>
+      <div class="tarp-trigger">
+        <strong style="color:var(--white)">TRIGGERS:</strong><br>
+        · Brent +15–25% in &lt;4 weeks<br>
+        · Geopolitical flashpoint — no resolution<br>
+        · VIX rises above 25<br>
+        · CPI above 2.5% and rising<br><br>
+        <span class="tag tag-gold">WHERE WE WERE: Feb 28</span>
+      </div>
+      <ul class="tarp-actions">
+        <li>Trim consumer discretionary and leveraged growth</li>
+        <li>Raise cash 10–15% of portfolio</li>
+        <li>Initiate energy equity position (5–8%)</li>
+        <li>Add 5% gold/gold miners</li>
+        <li>Lock in any variable rate debt</li>
+      </ul>
+    </div>
+
+    <!-- LEVEL 2 -->
+    <div class="tarp-col" style="border-top: 2px solid var(--gold);">
+      <div class="tarp-header">
+        <div class="tarp-dot" style="background:#e88040;"></div>
+        <span class="tarp-level" style="color:#e88040;">Level 2 — Confirmed Shock</span>
+      </div>
+      <div class="tarp-title">Sustained Supply Disruption</div>
+      <div class="tarp-trigger">
+        <strong style="color:var(--white)">TRIGGERS:</strong><br>
+        · Brent &gt;$100 sustained 4+ weeks<br>
+        · CPI prints rising MoM consecutively<br>
+        · Fed pauses cuts / signals hold<br>
+        · 10-yr yield rising above 4.5%<br><br>
+        <span class="tag tag-red">WHERE WE ARE: March 27</span>
+      </div>
+      <ul class="tarp-actions">
+        <li>Rotate fixed income: long → short duration</li>
+        <li>Increase energy equities to 12–15%</li>
+        <li>Gold to 10–12% of total portfolio</li>
+        <li>Add TIPS / inflation-linked bonds</li>
+        <li>Review and fix variable-rate mortgage exposure</li>
+        <li>Food and agriculture ETFs (fertilizer shock)</li>
+      </ul>
+    </div>
+
+    <!-- LEVEL 3 -->
+    <div class="tarp-col">
+      <div class="tarp-header">
+        <div class="tarp-dot" style="background:#d94f4f;"></div>
+        <span class="tarp-level" style="color:#d94f4f;">Level 3 — Stagflation Risk</span>
+      </div>
+      <div class="tarp-title">Fed Trapped / Growth Slowing</div>
+      <div class="tarp-trigger">
+        <strong style="color:var(--white)">TRIGGERS:</strong><br>
+        · Brent &gt;$120 sustained 2+ months<br>
+        · CPI exceeds 3.5%<br>
+        · Fed hikes or signals hike<br>
+        · GDP estimates revised to negative<br>
+        · Credit spreads widening 100bp+<br><br>
+        <span class="tag tag-gold">APPROACHING: Q2 2026</span>
+      </div>
+      <ul class="tarp-actions">
+        <li>De-risk to 40–50% defensive / cash posture</li>
+        <li>Gold miners for leveraged gold exposure</li>
+        <li>Actively short long-duration Treasuries</li>
+        <li>Hedge broad index (put spreads or inverse ETF)</li>
+        <li>Hard assets: gold, infrastructure, farmland</li>
+        <li>Watch FHA delinquency for housing cascade signal</li>
+      </ul>
+    </div>
+
+    <!-- LEVEL 4 / RECOVERY -->
+    <div class="tarp-col">
+      <div class="tarp-header">
+        <div class="tarp-dot" style="background:#3fa66e;"></div>
+        <span class="tarp-level" style="color:#3fa66e;">Recovery — Re-Entry</span>
+      </div>
+      <div class="tarp-title">Hormuz Reopens / CPI Turns</div>
+      <div class="tarp-trigger">
+        <strong style="color:var(--white)">TRIGGERS:</strong><br>
+        · Oil falls &gt;20% from peak, holds &lt;$90<br>
+        · Ceasefire / Hormuz reopening confirmed<br>
+        · CPI falls MoM for 2+ consecutive prints<br>
+        · Fed signals rate cuts are back<br>
+        · VIX drops below 20<br><br>
+        <span class="tag tag-green">WATCH: April 6 deadline</span>
+      </div>
+      <ul class="tarp-actions">
+        <li>Rotate back into quality growth and cyclicals</li>
+        <li>Extend bond duration as rates peak</li>
+        <li>Buy beaten-down industrials and consumer stocks</li>
+        <li>Reduce energy overweight gradually</li>
+        <li>Trim gold toward 5–7% base strategic weight</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 0;">
+    <strong style="font-style:normal; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold);">Critical Trigger Level — April 6, 2026</strong><br>
+    Trump's deadline for Iran to reopen the Strait. Iran has publicly rejected the ceasefire and demands Hormuz sovereignty. If the strait remains closed past April 6, the probability of Level 3 escalation rises from 25% to 40%+. This is the single most binary catalyst in the calendar.<sup>[52]</sup>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 10 — SCENARIOS & CONCLUSION
+══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="scenarios">
+  <div class="slide-num">10 / 10</div>
+  <div class="slide-eyebrow">Probability-Weighted Outcomes — Next 6 Months</div>
+  <h2 class="slide-title"><span>Scenarios</span> &amp; Conclusions</h2>
+  <p class="slide-lead">The market is pricing Scenario 1. The probability-weighted expected loss is materially worse than current pricing suggests. The asymmetry of risk is stark and the gap between market positioning and geopolitical reality is the trade.</p>
+
+  <div class="scenario-grid">
+    <div class="scenario-box">
+      <div class="scenario-prob">30%</div>
+      <div class="scenario-label">Scenario 1</div>
+      <div class="scenario-name">Quick Resolution</div>
+      <div class="scenario-details">
+        Hormuz reopens by mid-April.<br>
+        <strong>Brent: $80–85</strong><br>
+        <strong>S&amp;P 500: 6,800–7,000</strong><br>
+        <strong>CPI: &lt;3%</strong><br>
+        <strong>Gold: $4,200–4,500</strong><br>
+        Fed resumes cutting in June. Market recovers. Current base case per oil futures backwardation ($79.70 Dec vs $108 front month).<sup>[53]</sup>
+      </div>
+    </div>
+    <div class="scenario-box" style="border-top: 2px solid var(--gold);">
+      <div class="scenario-prob">40%</div>
+      <div class="scenario-label">Scenario 2 — Base Case</div>
+      <div class="scenario-name">Prolonged Disruption</div>
+      <div class="scenario-details">
+        Hormuz contested through Q2 with partial reopening.<br>
+        <strong>Brent: $100–115 avg</strong><br>
+        <strong>S&amp;P 500: 5,800–6,200 (−10–16%)</strong><br>
+        <strong>CPI: 3.0–3.5%</strong><br>
+        <strong>Gold: retests $5,000+</strong><br>
+        Mild recession begins Q3. Energy equities outperform by 20–30pp.<sup>[54]</sup>
+      </div>
+    </div>
+    <div class="scenario-box">
+      <div class="scenario-prob">25%</div>
+      <div class="scenario-label">Scenario 3</div>
+      <div class="scenario-name">Escalation / Sustained</div>
+      <div class="scenario-details">
+        Iran holds Hormuz through Q3.<br>
+        <strong>Brent: &gt;$130</strong><br>
+        <strong>S&amp;P 500: 4,800–5,500 (−20–30%)</strong><br>
+        <strong>CPI: &gt;4%</strong><br>
+        <strong>Gold: $6,000+</strong><br>
+        Fed forced to hike. Deep recession. CRE systemic distress. Gromen thesis fully validated.<sup>[55]</sup>
+      </div>
+    </div>
+    <div class="scenario-box">
+      <div class="scenario-prob" style="color:var(--red);">5%</div>
+      <div class="scenario-label">Scenario 4</div>
+      <div class="scenario-name">Black Swan</div>
+      <div class="scenario-details">
+        Direct Chinese/Russian intervention or nuclear dimension.<br>
+        <strong>Oil: &gt;$150</strong><br>
+        <strong>S&amp;P 500: −40%+</strong><br>
+        <strong>Gold: $8,000–10,000+</strong><br>
+        Monetary system restructuring becomes necessary. Dollar loses reserve premium. Gromen's $10K gold scenario activates.<sup>[56]</sup>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; color:var(--white); font-size:20px; margin-bottom:16px;">High-Conviction Calls</h3>
+  <div class="key-calls-grid">
+    <div class="key-call">
+      <div class="call-num">Call 01 — Gold</div>
+      <p>The 22% correction from $5,603 to ~$4,500 is a <strong>gift</strong>. The structural bid from central banks (1,200+ tonnes/year) and the collapsing gold-to-foreign-debt ratio (~16–19% vs 20% minimum) guarantee the secular trend resumes. JPMorgan targets $5,055 by Q4 2026; Gromen framework implies $10,000+ in revaluation. <strong>Build position in tranches. Size: 10–12%.</strong><sup>[57]</sup></p>
+    </div>
+    <div class="key-call">
+      <div class="call-num">Call 02 — Energy Equities</div>
+      <p>Exxon +23% YTD, Chevron +21%, energy sector +18% in March alone. In every oil shock, energy is the only equity sector that holds up. In a hiking environment, it outperforms gold. <strong>Overweight: 12–15%. Highest conviction position in the portfolio.</strong><sup>[58]</sup></p>
+    </div>
+    <div class="key-call">
+      <div class="call-num">Call 03 — Short Long Duration</div>
+      <p>The 30-yr yield is at 4.95% and climbing. Fiscal dominance means the Fed <em>cannot</em> hike enough to crush inflation without triggering a debt crisis. Result: yield curve steepens, long end sells off independently. <strong>TLT is structurally impaired. Short or avoid.</strong><sup>[59]</sup></p>
+    </div>
+    <div class="key-call">
+      <div class="call-num">Call 04 — Reduce S&amp;P 500 Beta</div>
+      <p>Historical average S&amp;P decline when Fed hikes into oil shock: <strong>−33 to −39%</strong>. Current −7% correction is barely the opening act if Brent holds above $100 through April. The market is pricing Scenario 1. We are not. <strong>Reduce beta 20–30%. Hold put protection on rallies.</strong><sup>[60]</sup></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTNOTES
+══════════════════════════════════════════════════════════════ -->
+<section id="footnotes" class="slide" style="min-height:auto;">
+  <div class="footnotes-header">Sources &amp; Footnotes</div>
+  <ol class="footnote-list">
+    <li><span class="fn-num">[1]</span> IEA, quoted in Wikipedia, "Economic impact of the 2026 Iran war." <a href="https://en.wikipedia.org/wiki/Economic_impact_of_the_2026_Iran_war" target="_blank">wikipedia.org</a></li>
+    <li><span class="fn-num">[2]</span> EIA, "Amid regional conflict, the Strait of Hormuz remains critical oil chokepoint." <a href="https://www.eia.gov/todayinenergy/detail.php?id=65504" target="_blank">eia.gov</a></li>
+    <li><span class="fn-num">[3]</span> Al Jazeera, "Why the oil and gas price shock from the Iran war won't just fade away." March 23, 2026. <a href="https://www.aljazeera.com/opinions/2026/3/23/why-the-oil-and-gas-price-shock-from-the-iran-war-wont-just-fade-away" target="_blank">aljazeera.com</a></li>
+    <li><span class="fn-num">[4]</span> Wikipedia, "Economic impact of the 2026 Iran war" — Gulf output collapse, March 12. <a href="https://en.wikipedia.org/wiki/Economic_impact_of_the_2026_Iran_war" target="_blank">wikipedia.org</a></li>
+    <li><span class="fn-num">[5]</span> CNBC, "CPI inflation report February 2026: CPI rose 2.4% annually." March 11, 2026. <a href="https://www.cnbc.com/2026/03/11/cpi-inflation-report-february-2026.html" target="_blank">cnbc.com</a></li>
+    <li><span class="fn-num">[6]</span> S&amp;P 500 Bear Markets historical data. Winthrop Wealth / historical FRED data. <a href="https://winthropwealth.com/wp-content/uploads/2023/01/SP-500-Bear-Markets-CQ.pdf" target="_blank">winthropwealth.com</a></li>
+    <li><span class="fn-num">[7]</span> CNBC, "Fed interest rate decision March 2026: Holds rates steady." March 18, 2026. <a href="https://www.cnbc.com/2026/03/18/fed-interest-rate-decision-march-2026.html" target="_blank">cnbc.com</a></li>
+    <li><span class="fn-num">[8]</span> Dallas Fed, "What the closure of the Strait of Hormuz means for the global economy." March 20, 2026. <a href="https://www.dallasfed.org/research/economics/2026/0320" target="_blank">dallasfed.org</a></li>
+    <li><span class="fn-num">[9]</span> Federal Reserve History, "The Great Inflation." <a href="https://www.federalreservehistory.org/essays/great-inflation" target="_blank">federalreservehistory.org</a></li>
+    <li><span class="fn-num">[10]</span> Federal Reserve History, "Volcker's Announcement of Anti-Inflation Measures." <a href="https://www.federalreservehistory.org/essays/anti-inflation-measures" target="_blank">federalreservehistory.org</a></li>
+    <li><span class="fn-num">[11]</span> Wikipedia, "1990 oil price shock." <a href="https://en.wikipedia.org/wiki/1990_oil_price_shock" target="_blank">wikipedia.org</a>; TrendSpider, "The Gulf War Recession 1990–1991." <a href="https://trendspider.com/learning-center/the-gulf-war-recession-1990-1991/" target="_blank">trendspider.com</a></li>
+    <li><span class="fn-num">[12]</span> The Motley Fool, "Stock Performance in Every Recession Since 1980." <a href="https://www.fool.com/research/stock-performance-recessions/" target="_blank">fool.com</a></li>
+    <li><span class="fn-num">[13]</span> Wikipedia, "2022 stock market decline." <a href="https://en.wikipedia.org/wiki/2022_stock_market_decline" target="_blank">wikipedia.org</a></li>
+    <li><span class="fn-num">[14]</span> Wikipedia, "2026 Strait of Hormuz crisis." <a href="https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis" target="_blank">wikipedia.org</a></li>
+    <li><span class="fn-num">[15]</span> Al Jazeera, "Why the oil and gas price shock from the Iran war won't just fade away." March 23, 2026. <a href="https://www.aljazeera.com/opinions/2026/3/23/why-the-oil-and-gas-price-shock-from-the-iran-war-wont-just-fade-away" target="_blank">aljazeera.com</a></li>
+    <li><span class="fn-num">[16]</span> USAGOLD, "Gold Price History." <a href="https://www.usagold.com/daily-gold-price-history/" target="_blank">usagold.com</a></li>
+    <li><span class="fn-num">[17]</span> US Bureau of Labor Statistics / FRED, Consumer Price Index for All Urban Consumers. <a href="https://tradingeconomics.com/united-states/inflation-cpi" target="_blank">tradingeconomics.com</a></li>
+    <li><span class="fn-num">[18]</span> MintBuilder, "Gold Price History — 10-Year Gold Price Chart &amp; Data." <a href="https://mintbuilder.com/gold-price-history" target="_blank">mintbuilder.com</a></li>
+    <li><span class="fn-num">[19]</span> OilPriceAPI, "Historical Oil &amp; Gas Prices — 2026 Data &amp; Charts." <a href="https://www.oilpriceapi.com/historical-prices" target="_blank">oilpriceapi.com</a></li>
+    <li><span class="fn-num">[20]</span> Blanchard &amp; Galí (2009), "The Macroeconomic Effects of Oil Price Shocks: Why Are the 2000s So Different from the 1970s?" NBER. Boston University. <a href="https://www.bu.edu/econ/files/2011/01/GKcr2005.pdf" target="_blank">bu.edu</a></li>
+    <li><span class="fn-num">[21]</span> Federal Reserve History. "The Great Inflation." <a href="https://www.federalreservehistory.org/essays/great-inflation" target="_blank">federalreservehistory.org</a></li>
+    <li><span class="fn-num">[22]</span> Wikipedia, "1990 oil price shock." <a href="https://en.wikipedia.org/wiki/1990_oil_price_shock" target="_blank">wikipedia.org</a></li>
+    <li><span class="fn-num">[23]</span> USAGOLD, "Gold Price History." <a href="https://www.usagold.com/daily-gold-price-history/" target="_blank">usagold.com</a></li>
+    <li><span class="fn-num">[24]</span> New Eastern Europe, "Gold in the age of sanctions: How the Russia-Ukraine war reshaped the global bullion market." Feb 2026. <a href="https://neweasterneurope.eu/2026/02/02/gold-in-the-age-of-sanctions-how-the-russia-ukraine-war-reshaped-the-global-bullion-market/" target="_blank">neweasterneurope.eu</a></li>
+    <li><span class="fn-num">[25]</span> FinancialContent, "Gold's Massive 22% Correction: From $5,603 Record to Hawkish Fed Reality." March 26, 2026. <a href="https://markets.financialcontent.com/stocks/article/marketminute-2026-3-26-golds-massive-22-correction-from-5603-record-to-hawkish-fed-reality" target="_blank">financialcontent.com</a></li>
+    <li><span class="fn-num">[26]</span> BullionVault, "US Asset Class Performance &amp; Gold Comparison." <a href="https://www.bullionvault.com/gold-guide/annual-asset-performance-comparison" target="_blank">bullionvault.com</a></li>
+    <li><span class="fn-num">[27]</span> Morgan Stanley, "Iran War Oil Shock: Stock Market Impacts." 2026. <a href="https://www.morganstanley.com/insights/articles/iran-war-oil-shock-stock-market-impacts" target="_blank">morganstanley.com</a></li>
+    <li><span class="fn-num">[28]</span> Bankrate, "Federal Funds Rate History: 1980 Through The Present." <a href="https://www.bankrate.com/banking/federal-reserve/history-of-federal-funds-rate/" target="_blank">bankrate.com</a></li>
+    <li><span class="fn-num">[29]</span> Federal Reserve History, "The Great Inflation." <a href="https://www.federalreservehistory.org/essays/great-inflation" target="_blank">federalreservehistory.org</a></li>
+    <li><span class="fn-num">[30]</span> Finexus Research, "Volcker's War: Breaking Inflation at Any Cost." March 19, 2026. <a href="https://finexus.net/insights/bls/fed-ep4-volcker-20260319-083000.html" target="_blank">finexus.net</a>; CNBC, "When Volcker ruled the Fed, 'people thought they'd never buy a home again.'" <a href="https://www.cnbc.com/2019/12/09/when-volcker-ruled-fed-people-thought-theyd-never-buy-a-home-again.html" target="_blank">cnbc.com</a></li>
+    <li><span class="fn-num">[31]</span> American Deposits, "Interest Rates and Recession History in the U.S. (1970–Present)." <a href="https://americandeposits.com/insights/interest-rates-recession-history-united-states/" target="_blank">americandeposits.com</a></li>
+    <li><span class="fn-num">[32]</span> Bankrate, "Federal Funds Rate History." <a href="https://www.bankrate.com/banking/federal-reserve/history-of-federal-funds-rate/" target="_blank">bankrate.com</a></li>
+    <li><span class="fn-num">[33]</span> TheStreet, "A timeline of the Fed's '22–'23 rate hikes &amp; what caused them." <a href="https://www.thestreet.com/fed/fed-rate-hikes-2022-2023-timeline-discussion" target="_blank">thestreet.com</a>; Richmond Fed, "A Rate Cycle Unlike Any Other." 2023. <a href="https://www.richmondfed.org/publications/research/economic_brief/2023/eb_23-26" target="_blank">richmondfed.org</a></li>
+    <li><span class="fn-num">[34]</span> CNBC, "Fed interest rate decision March 2026: Holds rates steady." March 18, 2026. <a href="https://www.cnbc.com/2026/03/18/fed-interest-rate-decision-march-2026.html" target="_blank">cnbc.com</a>; Wolf Street, "2-Year, 3-Year Treasury Yields Spike." March 21, 2026. <a href="https://wolfstreet.com/2026/03/21/" target="_blank">wolfstreet.com</a></li>
+    <li><span class="fn-num">[35]</span> Wolf Street, "Office CMBS Delinquency Rate Spikes to a Record 11%." Dec 2024. <a href="https://wolfstreet.com/2024/12/31/office-cmbs-delinquency-rate-spikes-to-a-record-11-surpassing-the-peak-of-the-financial-crisis/" target="_blank">wolfstreet.com</a></li>
+    <li><span class="fn-num">[36]</span> MBA National Delinquency Survey, Q4 2025. HousingWire, "Mortgages may be the sunny spot in a cloudy US economy." <a href="https://www.housingwire.com/articles/fhfa-mortgage-database-ltv-delinquency-equity-interest-rates-home-prices/" target="_blank">housingwire.com</a></li>
+    <li><span class="fn-num">[37]</span> Multi-Housing News, "2026 CMBS Delinquency Rates." <a href="https://www.multihousingnews.com/cmbs-delinquency-rates/" target="_blank">multihousingnews.com</a></li>
+    <li><span class="fn-num">[38]</span> EBSCO, "Recession of 1981–1982." <a href="https://www.ebsco.com/research-starters/politics-and-government/recession-1981-1982" target="_blank">ebsco.com</a>; Debexpert, "Mortgage Rate History: 1970s to 2024." <a href="https://www.debexpert.com/sell-mortgage-notes/the-history-of-mortgage-rates" target="_blank">debexpert.com</a></li>
+    <li><span class="fn-num">[39]</span> USREOP, "MBA Chart of the Week: Mortgage Delinquency Rates." <a href="https://usreop.com/mba-chart-of-the-week-mortgage-delinquency-rates-seasonally-adjusted-excludes-loans-in-foreclosure/" target="_blank">usreop.com</a></li>
+    <li><span class="fn-num">[40]</span> NY Fed, "Household Debt Balances Grow Modestly; Early Delinquencies Level Out." Feb 10, 2026. <a href="https://www.newyorkfed.org/newsevents/news/research/2026/20260210" target="_blank">newyorkfed.org</a></li>
+    <li><span class="fn-num">[41]</span> The Kaplan Group, "Is Commercial Real Estate at a Breaking Point in 2025?" <a href="https://www.kaplancollectionagency.com/business-advice/is-commercial-real-estate-at-a-breaking-point-in-2025/" target="_blank">kaplancollectionagency.com</a></li>
+    <li><span class="fn-num">[42]</span> MBA National Delinquency Survey, Q4 2025. HousingWire analysis. <a href="https://www.housingwire.com" target="_blank">housingwire.com</a></li>
+    <li><span class="fn-num">[43]</span> BAI, "Credit card and auto loan delinquencies hit highest rate in a decade." <a href="https://www.bai.org/banking-strategies/credit-card-and-auto-loans-falling-into-delinquency-hit-highest-rate-in-a-decade-and-defaults-have-not-peaked-fed-says/" target="_blank">bai.org</a>; Center for American Progress, "The War in Iran Will Raise Fuel Prices." March 2026. <a href="https://www.americanprogress.org/article/the-war-in-iran-will-raise-fuel-prices-and-costs-throughout-the-economy/" target="_blank">americanprogress.org</a></li>
+    <li><span class="fn-num">[44]</span> FHFA Mortgage Database; HousingWire, "Mortgages may be the sunny spot in a cloudy US economy." <a href="https://www.housingwire.com/articles/fhfa-mortgage-database-ltv-delinquency-equity-interest-rates-home-prices/" target="_blank">housingwire.com</a></li>
+    <li><span class="fn-num">[45]</span> Luke Gromen, "Open or Closed: The Strait of Hormuz is the Only Thing That Matters!" Metals &amp; Miners Substack, March 23, 2026. <a href="https://metalsandminers.substack.com/p/luke-gromen-open-or-closed-the-strait" target="_blank">substack.com</a></li>
+    <li><span class="fn-num">[46]</span> Luke Gromen / FFTT analysis. Macrovoices, "Luke Gromen: Why The Gold Recycling Trade is Accelerating." <a href="https://www.macrovoices.com/podcast-transcripts/1352-luke-gromen-why-the-gold-recycling-trade-is-accelerating" target="_blank">macrovoices.com</a></li>
+    <li><span class="fn-num">[47]</span> Jordisblog, "Luke Gromen's Gold Thesis: Why $10,000+ Gold by 2028." <a href="https://www.jordisblog.com/posts/luke-gromen-gold-thesis-china-jan-2028" target="_blank">jordisblog.com</a></li>
+    <li><span class="fn-num">[48]</span> World Gold Council, annual central bank demand data 2017–2023. Referenced via Luke Gromen / FFTT, Macrovoices transcripts.</li>
+    <li><span class="fn-num">[49]</span> WealthGen Advisors, "Navigating Stagflation: Lessons from the 1970s and Today." <a href="https://wealthgenadvisor.com/navigating-stagflation-lessons-from-the-1970s-and-today/" target="_blank">wealthgenadvisor.com</a></li>
+    <li><span class="fn-num">[50]</span> BullionVault, "US Asset Class Performance &amp; Gold Comparison." <a href="https://www.bullionvault.com/gold-guide/annual-asset-performance-comparison" target="_blank">bullionvault.com</a>; John Rothe, "Looking back at the 1970s: Which Areas of the Stock Market Did Well Under Stagflation." <a href="https://www.johnrothe.com/p/looking-back-at-the-1970s-which-areas-of-the-stock-market-did-well-under-stagflation" target="_blank">johnrothe.com</a></li>
+    <li><span class="fn-num">[51]</span> DataTrek Research, "US Stock and Real Estate Values During Stagflation." <a href="https://datatrekresearch.com/us-stock-and-real-estate-values-during-stagflation/" target="_blank">datatrekresearch.com</a></li>
+    <li><span class="fn-num">[52]</span> NPR, "Trump grants Iran another extension on a deadline to reopen the Strait of Hormuz." March 26, 2026. <a href="https://www.npr.org/2026/03/26/nx-s1-5761882/iran-war-peace-conditions" target="_blank">npr.org</a>; CNBC, "Iran rejects U.S. ceasefire, demands Strait of Hormuz sovereignty." March 25, 2026. <a href="https://www.cnbc.com/2026/03/25/iran-war-us-trump.html" target="_blank">cnbc.com</a></li>
+    <li><span class="fn-num">[53]</span> CNBC, "The oil market is in 'backwardation' — Here's what that means for energy prices." March 26, 2026. <a href="https://www.cnbc.com/2026/03/26/market-trends-oil-futures-backwardation.html" target="_blank">cnbc.com</a></li>
+    <li><span class="fn-num">[54]</span> Fortune, "Goldman raises recession odds to 30% on higher inflation, lower GDP outlook as oil prices surge." March 25, 2026. <a href="https://fortune.com/2026/03/25/will-there-be-recession-goldman-forecast-oil-price-inflation-economy/" target="_blank">fortune.com</a></li>
+    <li><span class="fn-num">[55]</span> CSIS, "The Iran Conflict Is Sending Oil Prices Soaring—What Happens Next?" March 2026. <a href="https://www.csis.org/analysis/iran-conflict-sending-oil-prices-soaring-what-happens-next" target="_blank">csis.org</a></li>
+    <li><span class="fn-num">[56]</span> Macrovoices, "Has The Luke Gromen Moment Arrived?" 2026. <a href="https://www.macrovoices.com/podcast-transcripts/1457-has-the-luke-gromen-moment-arrived" target="_blank">macrovoices.com</a></li>
+    <li><span class="fn-num">[57]</span> MintBuilder, "Gold Price Forecast 2026 | Expert Predictions &amp; Analysis." <a href="https://mintbuilder.com/gold-price-forecast" target="_blank">mintbuilder.com</a>; TradingKey, "What to Look out for Gold After Fed Meeting?" <a href="https://www.tradingkey.com/analysis/commodities/metal/261693950-gold-price-outlook-2026-key-drivers-fomc-impact-what-investors-should-watch-tradingkey" target="_blank">tradingkey.com</a></li>
+    <li><span class="fn-num">[58]</span> FinancialContent, "Energy Shock: Global Oil Prices Surge as Middle East Conflict Escalates." March 26, 2026. <a href="https://markets.financialcontent.com/stocks/article/marketminute-2026-3-26-energy-shock-global-oil-prices-surge-as-middle-east-conflict-escalates" target="_blank">financialcontent.com</a></li>
+    <li><span class="fn-num">[59]</span> Wolf Street, "2-Year, 3-Year Treasury Yields Spike, Flip to Rate Hike." March 21, 2026. <a href="https://wolfstreet.com/2026/03/21/2-year-3-year-treasury-yields-spike-flip-to-rate-hike-yield-curve-uninverts-government-sold-606-billion-of-treasury-securities-this-week-as-the-borrowing-must-go-on/" target="_blank">wolfstreet.com</a></li>
+    <li><span class="fn-num">[60]</span> CNBC, "Market guide: Where the S&amp;P 500 may be headed, depending on how the Iran war goes." March 26, 2026. <a href="https://www.cnbc.com/2026/03/26/market-guide-where-the-sp-500-may-go-depending-on-the-course-of-the-war.html" target="_blank">cnbc.com</a></li>
+  </ol>
+
+  <div class="fn-disclaimer">
+    DISCLAIMER: All historical data is sourced from publicly available research including FRED, BLS, MBA, FHFA, EIA, IEA, and cited publications. Forward-looking scenarios represent probability-weighted analysis based on historical precedent and should not be construed as investment advice. Past performance of asset classes during historical oil shocks does not guarantee future results. This material is confidential and intended solely for the named recipient. Luke Gromen / FFTT analysis referenced throughout represents the views of the cited analyst, not the author or institution. All figures current as of March 27, 2026.
+  </div>
+</section>
+
+<script>
+// ── CHART.JS GLOBAL DEFAULTS ────────────────────────────────
+Chart.defaults.color = '#7a8090';
+Chart.defaults.font.family = "'IBM Plex Mono', monospace";
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+Chart.defaults.plugins.legend.labels.padding = 16;
+
+const gridColor = 'rgba(30,34,40,0.8)';
+const gold = '#c9a84c';
+const red  = '#d94f4f';
+const grn  = '#3fa66e';
+const blu  = '#4a7fc1';
+const muted= '#7a8090';
+
+// ── CHART 1: SEVERITY BAR ───────────────────────────────────
+new Chart(document.getElementById('severityChart'), {
+  type: 'bar',
+  data: {
+    labels: ['1973 Arab Embargo','1979 Iran Revolution','1990 Gulf War','2022 Russia-Ukraine','2026 Hormuz Closure'],
+    datasets: [{
+      label: 'Supply Disruption (Million Barrels/Day)',
+      data: [4.5, 3.5, 4.3, 1.5, 18],
+      backgroundColor: ['#4a7fc1','#4a7fc1','#4a7fc1','#4a7fc1', gold],
+      borderColor:     ['#4a7fc1','#4a7fc1','#4a7fc1','#4a7fc1', '#e8c97a'],
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.x} mbd` } }
+    },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { callback: v => v + ' mbd' } },
+      y: { grid: { color: gridColor } }
+    }
+  }
+});
+
+// ── CHART 2: OVERLAY (Oil / Gold / CPI) ────────────────────
+new Chart(document.getElementById('overlayChart'), {
+  type: 'bar',
+  data: {
+    labels: ['1973 Embargo','1979–80 Iran','1990 Gulf War','2008 Supercycle','2022 Russia-Ukraine','2026 Hormuz'],
+    datasets: [
+      {
+        label: 'Oil Price Move (%)',
+        data: [300, 180, 135, 390, 74, 75],
+        backgroundColor: 'rgba(217,79,79,0.75)',
+        yAxisID: 'y',
+        order: 2
+      },
+      {
+        label: 'Gold Move (%)',
+        data: [197, 276, 13, 21, 15, 173],
+        backgroundColor: 'rgba(201,168,76,0.85)',
+        yAxisID: 'y',
+        order: 2
+      },
+      {
+        label: 'CPI Peak (%)',
+        data: [12.3, 14.8, 6.3, 5.6, 9.1, null],
+        type: 'line',
+        borderColor: grn,
+        backgroundColor: 'rgba(63,166,110,0.1)',
+        pointBackgroundColor: grn,
+        pointRadius: 5,
+        tension: 0.3,
+        yAxisID: 'y2',
+        order: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top' },
+      tooltip: { mode: 'index' }
+    },
+    scales: {
+      y:  { grid: { color: gridColor }, title: { display: true, text: 'Price Move (%)' }, position: 'left' },
+      y2: { grid: { display: false }, title: { display: true, text: 'CPI Peak (%)' }, position: 'right', max: 20 },
+      x:  { grid: { color: gridColor } }
+    }
+  }
+});
+
+// ── CHART 3: REAL RETURNS 1970s ─────────────────────────────
+new Chart(document.getElementById('realReturnsChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Gold','Commodities','Farmland','REITs','Cash/T-Bills','S&P 500','Long Bonds'],
+    datasets: [{
+      label: 'Annualized Real Return (%)',
+      data: [9.2, 7.5, 5.5, 4.5, 0.2, -1.2, -4.0],
+      backgroundColor: [gold, gold, grn, grn, muted, red, red],
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { callback: v => v + '%' } },
+      y: { grid: { color: gridColor } }
+    }
+  }
+});
+
+// ── CHART 4: FED RATE HISTORY ───────────────────────────────
+new Chart(document.getElementById('fedChart'), {
+  type: 'bar',
+  data: {
+    labels: ['1973 Burns','1979 Volcker','1990 Greenspan','2007 Bernanke','2022 Powell','2026 NOW'],
+    datasets: [
+      {
+        label: 'Peak Fed Funds Rate (%)',
+        data: [12.0, 19.1, 8.25, 5.25, 5.50, 3.75],
+        backgroundColor: [red, red, grn, red, red, gold],
+        yAxisID: 'y',
+        order: 2,
+      },
+      {
+        label: 'S&P 500 Max Drawdown (%)',
+        data: [-48.2, -27.1, -19.9, -56.8, -25.4, -7],
+        type: 'line',
+        borderColor: '#d94f4f',
+        backgroundColor: 'rgba(217,79,79,0.08)',
+        pointBackgroundColor: red,
+        pointRadius: 6,
+        tension: 0.2,
+        yAxisID: 'y2',
+        order: 1,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' }, tooltip: { mode: 'index' } },
+    scales: {
+      y:  { grid: { color: gridColor }, title: { display: true, text: 'Fed Funds Rate (%)' }, position: 'left' },
+      y2: { grid: { display: false }, title: { display: true, text: 'S&P 500 Drawdown (%)' }, position: 'right', max: 0 },
+      x:  { grid: { color: gridColor } }
+    }
+  }
+});
+
+// ── CHART 5: MORTGAGE DELINQUENCY ──────────────────────────
+new Chart(document.getElementById('delinquencyChart'), {
+  type: 'line',
+  data: {
+    labels: ['1980','1982','1985','1990','1995','2000','2005','2008','2010','2015','2019','2020','2022','2024','2025Q4'],
+    datasets: [
+      {
+        label: 'Overall Delinquency Rate (%)',
+        data: [4.5, 6.5, 5.8, 4.2, 4.8, 4.4, 4.7, 7.9, 10.06, 5.5, 3.9, 8.2, 3.5, 3.8, 4.26],
+        borderColor: gold,
+        backgroundColor: 'rgba(201,168,76,0.08)',
+        pointBackgroundColor: gold,
+        pointRadius: 3,
+        tension: 0.35,
+        fill: true,
+      },
+      {
+        label: 'GFC Peak',
+        data: [null,null,null,null,null,null,null,null,10.06,null,null,null,null,null,null],
+        borderColor: 'transparent',
+        pointBackgroundColor: red,
+        pointRadius: 7,
+        pointStyle: 'star',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: {
+      y: { grid: { color: gridColor }, ticks: { callback: v => v + '%' } },
+      x: { grid: { color: gridColor } }
+    }
+  }
+});
+
+// ── CHART 6: CMBS DELINQUENCY ───────────────────────────────
+const cmbsCanvas = document.getElementById('cmbs Chart');
+if (cmbsCanvas) {
+new Chart(cmbsCanvas, {
+  type: 'bar',
+  data: {
+    labels: ['Office\nCMBS','Retail\nCMBS','Multifamily\nCMBS','Hotel\nCMBS','Industrial\nCMBS','Overall\nCMBS'],
+    datasets: [
+      {
+        label: 'Current (Q1 2026)',
+        data: [12.34, 8.1, 6.94, 4.2, 0.8, 5.3],
+        backgroundColor: [red, '#e88040', '#e88040', muted, grn, '#4a7fc1'],
+      },
+      {
+        label: 'GFC Peak (2010)',
+        data: [10.7, 9.2, 3.5, 15.0, 1.2, 8.7],
+        backgroundColor: 'rgba(74,127,193,0.35)',
+        borderColor: blu,
+        borderWidth: 1,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: {
+      y: { grid: { color: gridColor }, ticks: { callback: v => v + '%' } },
+      x: { grid: { color: gridColor } }
+    }
+  }
+});
+}
+
+// ── CHART 7: GOLD-OIL RATIO ─────────────────────────────────
+new Chart(document.getElementById('goldOilChart'), {
+  type: 'line',
+  data: {
+    labels: ['1970','1973','1975','1979','1980','1985','1990','1995','2000','2005','2008','2010','2015','2017','2019','2021','2023','Sep 25'],
+    datasets: [{
+      label: 'Gold/Oil Ratio (Barrels per oz)',
+      data: [12, 8, 15, 14, 22, 30, 18, 20, 25, 16, 7, 18, 28, 22, 30, 40, 45, 61],
+      borderColor: gold,
+      backgroundColor: 'rgba(201,168,76,0.07)',
+      pointBackgroundColor: gold,
+      pointRadius: 3,
+      tension: 0.4,
+      fill: true,
+    },
+    {
+      label: 'Historical Average (~16)',
+      data: Array(18).fill(16),
+      borderColor: muted,
+      borderDash: [5,5],
+      borderWidth: 1,
+      pointRadius: 0,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: {
+      y: { grid: { color: gridColor }, title: { display: true, text: 'Barrels of Oil per oz Gold' } },
+      x: { grid: { color: gridColor } }
+    }
+  }
+});
+
+// ── CHART 8: 1970s STAGFLATION RETURNS ──────────────────────
+new Chart(document.getElementById('stagflationChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Gold','Commodities','Farmland','REITs / RE','Cash','S&P 500','Long Bonds'],
+    datasets: [{
+      label: 'Annualized Real Return (%) — 1970s',
+      data: [9.2, 7.5, 5.5, 4.5, 0.2, 0.0, -4.0],
+      backgroundColor: v => v.parsed.y >= 0 ? gold : red,
+      backgroundColor: [gold, gold, grn, grn, muted, '#e88040', red],
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { callback: v => v + '%' } },
+      y: { grid: { color: gridColor } }
+    }
+  }
+});
+
+// ── CHART 9: 2022 ASSET PERFORMANCE ─────────────────────────
+new Chart(document.getElementById('2022Chart'), {
+  type: 'bar',
+  data: {
+    labels: ['Energy Equities','Commodities','Cash/T-bills','Gold','S&P 500','NASDAQ','Long Bonds'],
+    datasets: [{
+      label: 'Nominal Return (%) — 2022',
+      data: [59, 16, 2, -0.3, -19.4, -33, -17.7],
+      backgroundColor: [gold, gold, muted, '#e88040', red, red, red],
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { callback: v => v + '%' } },
+      y: { grid: { color: gridColor } }
+    }
+  }
+});
+</script>
+</body>
+</html>
